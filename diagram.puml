@@ -1,0 +1,57 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class OilCompany {
+-extractors: List<Extractor>
++countDamagedDevices(number: int): void
++getDeviceType(): extractor: Extractor
++addExtractor(extractors: List<Extractor>): void
+}
+
+
+
+abstract class Extractor {
+-serial: int
+-capacity: int
+-quantity: int
+}
+
+abstract class ExtractorWithLocation extends Extractor{
+#location: String
+}
+
+
+class FixedExtractor extends ExtractorWithLocation {
+}
+
+class MobileExtractor extends ExtractorWithLocation implements Reporter {
++setNewLocation(location: Location): void
+}
+
+class OffshoreExtractor extends Extractor implements Reporter{
+-workers: List<Worker>
++addWorker(worker: Worker): void
+}
+
+class Worker {
+-name: String
+-position: WorkerPosition
+-numberOfDays: int
+}
+
+enum WorkerPosition {
+MANUAL_WORKER,
+MEDIC,
+MANAGER
+}
+
+interface Reporter {
++{abstract}reportFault(): boolean
+}
+
+
+Worker --> WorkerPosition
+OffshoreExtractor o-- Worker
+OilCompany o-- Extractor
+
+@enduml
